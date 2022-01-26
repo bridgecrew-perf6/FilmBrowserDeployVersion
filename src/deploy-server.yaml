@@ -20,11 +20,9 @@ spec:
       serviceAccountName: default
       containers:
       - name: server
-        image: image-registry.openshift-image-registry.svc:5000/labproj28/server:25
+        image: image-registry.openshift-image-registry.svc:5000/labproj28/server:v10
         imagePullPolicy: Always
         env:
-          - name: REACT_APP_GAMES_INFO_URL
-            value: route-info-labproj28.apps.ocp.lab.cloudpak.site
           - name: MYSQL_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:

@@ -13,7 +13,8 @@ function App() {
   const [filmList, setFilmList] = useState([]);
 
   const addFilm = () => {
-    Axios.post("http://films-backend-labproj28.apps.ocp.lab.cloudpak.site/create", {
+    try {
+      Axios.post("http://filmbase-labproj28.apps.ocp.lab.cloudpak.site/create", {
       name: name,
       type: type,
       year: year,
@@ -21,10 +22,13 @@ function App() {
     }).then(() => {
       console.log("success")
     });
+  } catch(error) { 
+      console.log("Catch = ", error.response); 
+  } 
   };
 
   const getFilms = () => {
-    Axios.get("http://films-backend-labproj28.apps.ocp.lab.cloudpak.site/films").then((response) => {
+    Axios.get("http://filmbase-labproj28.apps.ocp.lab.cloudpak.site/films").then((response) => {
       setFilmList(response.data)
     });
   }

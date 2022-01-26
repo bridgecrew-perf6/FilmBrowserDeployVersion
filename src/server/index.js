@@ -1,18 +1,34 @@
-const express = require("express");
+const express = require('express');
+const mysql = require('mysql2');
+const cors = require("cors");
+require('dotenv').config();
+const dbConfig = {
+    host: process.env.host,
+    port: process.env.port,
+    user: process.env.user,
+    password: process.env.password,
+    database: process.env.database
+};
+
+console.log({dbConfig})
+const db = mysql.createConnection(dbConfig);
+
+db.connect((err) => {
+    if(err){
+        throw err;
+    }
+    console.log('MySQL connected');
+});
+
 const app = express();
-const mysql = require("mysql")
-const cors = require("cors")
+app.set('port', process.env.react_app_server_port || 80);
 
 app.use(
-    cors({})
-  );
-app.use(express.json());
+  cors({})
+);
 
-const db = mysql.createConnection({
-    host: "mysql",
-    user: "root",
-    password: "password",
-    database: "myfilms"
+app.listen(process.env.react_app_server_port, () => {
+    console.log('Server started on port: ' + process.env.react_app_server_port);
 });
 
 app.post('/create', (req, res) => {
@@ -42,6 +58,10 @@ app.get('/films', (req, res) => {
         }
     });
 });
+
+app.get('/', (req, res) => {
+    res.send('qxd')
+})
 
 app.listen(3001, () => {
     console.log("dupa is running on 3001");

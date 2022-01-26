@@ -28,7 +28,7 @@ spec:
       serviceAccountName: default
       containers:
       - name: client
-        image: image-registry.openshift-image-registry.svc:5000/labproj28/client:20
+        image: image-registry.openshift-image-registry.svc:5000/labproj28/client:v12
         imagePullPolicy: Always
         ports:
         - containerPort: 80

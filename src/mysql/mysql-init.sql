@@ -1,6 +1,7 @@
 CREATE DATABASE myfilms;
 USE myfilms;
 
+
 CREATE TABLE `myfilms`.`films` (
 `id` INT NOT NULL AUTO_INCREMENT,
 `name` TEXT(255) NOT NULL,
