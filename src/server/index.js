@@ -3,15 +3,16 @@ const app = express();
 const mysql = require("mysql")
 const cors = require("cors")
 
-app.use(cors());
+app.use(
+    cors({})
+  );
 app.use(express.json());
 
 const db = mysql.createConnection({
+    host: "mysql",
     user: "root",
-    host: "172.17.0.2",
     password: "password",
-    database: "myfilms",
-    port: "3306",
+    database: "myfilms"
 });
 
 app.post('/create', (req, res) => {

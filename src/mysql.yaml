@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-credentials
+type: Opaque
+data:
+  rootpasswd: cGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+    service: mysql
+spec:
+  ports:
+  - port: 3306
+    name: tcp
+  selector:
+    app: mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mysql
+        version: v1
+    spec:
+      containers:
+      - name: mysql
+        image: image-registry.openshift-image-registry.svc:5000/labproj28/mysql:v2
+        imagePullPolicy: Always
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: password
+        ports:
+          - containerPort: 3306
+            name: mysql
+        volumeMounts:
+          - name: var-lib-mysql
+            mountPath: /var/lib/mysql
+      volumes:
+      - name: var-lib-mysql
+        persistentVolumeClaim:
+          claimName: pvc-mysql
+      securityContext:
+        runAsUser: 1000
+status: {}

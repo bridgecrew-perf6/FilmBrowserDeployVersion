@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: client
+    service: client
+  name: route-films
+spec:
+  host: ""
+  port:
+    targetPort: http
+  to:
+    kind: ""
+    name: client
+    weight: null
+status:

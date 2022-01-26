@@ -1,0 +1,17 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  creationTimestamp: null
+  labels:
+    app: server
+    service: server
+  name: filmbase
+spec:
+  host: ""
+  port:
+    targetPort: http
+  to:
+    kind: ""
+    name: server
+    weight: null
+status:

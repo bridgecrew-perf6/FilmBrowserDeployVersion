@@ -10,11 +10,10 @@ function App() {
   const [type, setType] = useState("");
   const [year, setYear] = useState(0);
   const [country, setCountry] = useState("");
-//Dodanie listy filmow(klik w button)
   const [filmList, setFilmList] = useState([]);
 
   const addFilm = () => {
-    Axios.post("http://localhost:3001/create", {
+    Axios.post("http://films-backend-labproj28.apps.ocp.lab.cloudpak.site/create", {
       name: name,
       type: type,
       year: year,
@@ -25,7 +24,7 @@ function App() {
   };
 
   const getFilms = () => {
-    Axios.get("http://localhost:3001/films").then((response) => {
+    Axios.get("http://films-backend-labproj28.apps.ocp.lab.cloudpak.site/films").then((response) => {
       setFilmList(response.data)
     });
   }

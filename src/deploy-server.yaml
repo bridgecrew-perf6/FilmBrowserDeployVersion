@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  labels:
+    app: server
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: server
+        version: v1
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: server
+        image: image-registry.openshift-image-registry.svc:5000/labproj28/server:25
+        imagePullPolicy: Always
+        env:
+          - name: REACT_APP_GAMES_INFO_URL
+            value: route-info-labproj28.apps.ocp.lab.cloudpak.site
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-credentials
+                key: rootpasswd
+        ports:
+        - containerPort: 3001
+        resources: {}
+        envFrom:
+        - configMapRef:
+            name: configmap-server
+status: {}

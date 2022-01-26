@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: info-credentials
+type: Opaque
+data:
+  rootpasswd: cGFzc3dvcmQ=
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client
+  labels:
+    app: client
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: client
+        version: v1
+    spec:      
+      serviceAccountName: default
+      containers:
+      - name: client
+        image: image-registry.openshift-image-registry.svc:5000/labproj28/client:20
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+          - name: password
+            valueFrom:
+              secretKeyRef:
+                name: info-credentials
+                key: rootpasswd
+        resources: {}
+        envFrom:
+        - configMapRef:
+            name: configmap
+status: {}
