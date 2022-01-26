@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql2');
 const cors = require("cors");
 require('dotenv').config();
+const bodyParser = require('body-parser')
 const dbConfig = {
     host: process.env.host,
     port: process.env.port,
@@ -26,6 +27,7 @@ app.set('port', process.env.react_app_server_port || 80);
 app.use(
   cors({})
 );
+app.use(bodyParser.json())
 
 app.listen(process.env.react_app_server_port, () => {
     console.log('Server started on port: ' + process.env.react_app_server_port);
@@ -41,7 +43,7 @@ app.post('/create', (req, res) => {
         [name, type, year, country],
         (err, result) => {
             if (err) {
-                console.log(err);
+                console.log(req.body);
             } else {
                 res.send("Values Inserted");
             }

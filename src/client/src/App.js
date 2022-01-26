@@ -13,8 +13,7 @@ function App() {
   const [filmList, setFilmList] = useState([]);
 
   const addFilm = () => {
-    try {
-      Axios.post("http://filmbase-labproj28.apps.ocp.lab.cloudpak.site/create", {
+    Axios.post("http://filmbase-labproj28.apps.ocp.lab.cloudpak.site/create", {
       name: name,
       type: type,
       year: year,
@@ -22,9 +21,7 @@ function App() {
     }).then(() => {
       console.log("success")
     });
-  } catch(error) { 
-      console.log("Catch = ", error.response); 
-  } 
+    
   };
 
   const getFilms = () => {
